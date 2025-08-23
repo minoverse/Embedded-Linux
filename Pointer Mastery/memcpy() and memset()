@@ -1,0 +1,48 @@
+//memcpy
+#include <stddef.h>
+
+void* my_memcpy(void* dest, const void* src, size_t n) {
+    unsigned char* d = dest;
+    const unsigned char* s = src;
+
+    for (size_t i = 0; i < n; i++) {
+        d[i] = s[i];   // copy byte by byte
+    }
+
+    return dest;
+}
+
+//memset
+#include <stddef.h>
+
+void* my_memset(void* dest, int value, size_t n) {
+    unsigned char* d = dest;
+
+    for (size_t i = 0; i < n; i++) {
+        d[i] = (unsigned char)value;  // set each byte to the given value
+    }
+
+    return dest;
+}
+//demo
+#include <stdio.h>
+
+int main(void) {
+    char buffer[10];
+
+    // memset example
+    my_memset(buffer, 'A', sizeof(buffer));
+    buffer[9] = '\0';
+    printf("After memset: %s\n", buffer); // prints AAAAAAAAA
+
+    // memcpy example
+    char src[] = "Hello";
+    my_memcpy(buffer, src, 6);  // includes '\0'
+    printf("After memcpy: %s\n", buffer); // prints Hello
+
+    return 0;
+}
+//in real embedded
+#include <string.h>
+memcpy(dest, src, n);
+memset(buf, 0, size);
