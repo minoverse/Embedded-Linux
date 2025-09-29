@@ -1,0 +1,69 @@
+#include <stddef.h>  // for NULL
+
+// Copy src (including '\0') into dst. Returns dst.
+// Caller must ensure dst has enough space.
+char *my_strcpy(char *dst, const char *src) {
+    char *ret = dst;
+    while ((*dst++ = *src++) != '\0') { /* copy */ }
+    return ret;
+}
+
+
+// Compare as *unsigned char* to match standard semantics.
+int my_strcmp(const char *a, const char *b) {
+    const unsigned char *s1 = (const unsigned char *)a;
+    const unsigned char *s2 = (const unsigned char *)b;
+
+    while (*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    return (int)(*s1) - (int)(*s2);
+}
+
+// Find first occurrence of 'needle' in 'haystack'.
+// Returns pointer to start of match, or NULL if not found.
+// Empty needle returns haystack.
+char *my_strstr(const char *haystack, const char *needle) {
+    // Empty needle → haystack
+    if (*needle == '\0') return (char *)haystack;
+
+    for (const char *h = haystack; *h; ++h) {
+        const char *p = h;
+        const char *q = needle;
+        while (*p && *q && (*p == *q)) {
+            ++p;
+            ++q;
+        }
+        if (*q == '\0') {                // matched entire needle
+            return (char *)h;
+        }
+        if (*p == '\0') break;           // haystack ended before full match
+    }
+    return NULL;
+}
+
+
+#include <stdio.h>
+
+int main(void) {
+    char buf[64];
+
+    // my_strcpy
+    printf("copy: \"%s\"\n", my_strcpy(buf, "hello"));
+
+    // my_strcmp
+    printf("cmp(abc, abc) = %d\n", my_strcmp("abc", "abc"));   // 0
+    printf("cmp(abc, abd) = %d\n", my_strcmp("abc", "abd"));   // <0
+    printf("cmp(abd, abc) = %d\n", my_strcmp("abd", "abc"));   // >0
+    printf("cmp(abc, ab)  = %d\n", my_strcmp("abc", "ab"));    // >0
+
+    // my_strstr
+    const char *h = "bananas";
+    printf("strstr(\"%s\", \"ana\") -> \"%s\"\n", h, my_strstr(h, "ana")); // "ananas"
+    printf("strstr(\"%s\", \"\")    -> \"%s\"\n", h, my_strstr(h, ""));    // "bananas"
+    printf("strstr(\"%s\", \"xyz\") -> %p\n", h, (void*)my_strstr(h, "xyz")); // NULL
+
+    return 0;
+}
+#endif
