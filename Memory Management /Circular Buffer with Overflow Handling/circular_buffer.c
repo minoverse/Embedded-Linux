@@ -12,7 +12,7 @@ struct CircularBuffer {
     int      overflow_occurred;  // sticky overflow flag
 };
 
-/* Create a circular buffer of given size (capacity). Returns NULL on error. */
+/* Create a circular buffer of given size. Returns NULL incase of  error. */
 CircularBuffer* cb_create(size_t size) {
     if (size == 0) {
         return NULL;
