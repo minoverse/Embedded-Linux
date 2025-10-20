@@ -32,11 +32,14 @@ clean:
 //README.md
 # Circular Buffer (Ring Buffer) with Overwrite-on-Overflow
 
-This project implements a fixed-size circular byte buffer in C. When full, new writes **overwrite the oldest data** and set a **sticky overflow flag** that can be queried and cleared.
+This project implements a fixed-size circular byte buffer in C. When full, new writes **overwrite the oldest data** and set a **sticky overflow flag** that can be queried and cleared. 
+head = index where the next write (push) will go
+
+tail = index where the next read (pop) will come from
 
 ## What you asked for (the task/prompt)
 
-**“Take-Home / Interview Coding Task: Circular Buffer with Overflow Handling”**
+**“Task: Circular Buffer with Overflow Handling”**
 
 - Implement a circular buffer of bytes in C.
 - API:
