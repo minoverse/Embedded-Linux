@@ -1,0 +1,49 @@
+1. Ring buffer vs dynamic array
+
+Ring buffer pros: fixed memory (no malloc), O(1) push/pop, good for producer/consumer streams (UART, ADC).
+
+Ring buffer cons: fixed size (must choose capacity), no random access.
+
+Dynamic array pros: can grow (realloc), flexible.
+
+Dynamic array cons: needs malloc/free, may fragment memory, not ISR-friendly.
+ In embedded, ring buffer is king because memory is fixed and deterministic.
+
+2. Polling vs interrupt
+
+Polling: simple, but wastes CPU and may miss fast events.
+
+Interrupt: efficient, event-driven, but must keep ISR short.
+ Embedded systems almost always prefer interrupts for I/O.
+
+3. DMA (Direct Memory Access)
+
+Peripheral → memory transfer without CPU involvement.
+
+Pros: frees CPU, handles bursts of data (e.g., SPI, UART).
+
+Cons: more setup, still need interrupts on completion.
+ Example: UART with DMA → DMA moves bytes into a ring buffer; ISR fires only when buffer is half/full, not on every byte.
+
+4. FreeRTOS/OpenRTOS basics
+
+Tasks: lightweight threads.
+
+Scheduler: preemptive (round robin / priorities).
+
+Queues/Semaphores: safe data sharing between tasks and ISRs.
+
+Delays/Timeouts: vTaskDelay, xQueueReceive with timeout.
+Just be able to describe tasks vs ISR vs bare-metal superloop.
+
+5. STM32, Zycar/Zynq, Qualcomm chips
+
+Don’t panic — they don’t expect i know every chip.
+
+They check: do you know the layers?
+
+Bare metal (superloop).
+
+With RTOS (tasks/queues).
+
+With DMA/interrupts for efficient I/O.
