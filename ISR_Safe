@@ -1,0 +1,12 @@
+1.Use the volatile keyword
+volatile to prevent the compiler from optimizing away reads or writes to them, as their values can change unexpectedly at any time
+
+2.Disable interrupts: When accessing a shared variable from the main program, temporarily disable interrupts to create a "critical section" where the ISR cannot interrupt the operation. 
+// In main loop
+    disable_interrupts();
+    shared_counter++;
+    enable_interrupts();
+
+3.Use atomic operations: For simple read/write operations, use atomic functions provided by your compiler or CPU. These guarantee that the operation completes as a single, indivisible step, preventing corruption.
+// Example using GCC built-in functions
+    atomic_store_n(&shared_counter, 1, ATOMIC_SEQ_CST);
