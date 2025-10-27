@@ -1,0 +1,21 @@
+# UART RX ring buffer (practice)
+
+Single-producer/single-consumer ring buffer for UART RX with:
+- 64-byte buffer (power of 2)
+- ISR pushes, main loop pops
+- Overflow handling: drop-new (default) or overwrite-oldest (`#define OVERWRITE_OLDEST`)
+- High/low watermarks (75% / 25%) with hysteresis
+- Overflow counter
+
+Build: add these files to your MCU project; call `uart_echo_task()` in the main loop and push bytes from RX ISR.
+
+art-ringbuf-practice/
+├─ include/
+│  ├─ config.h           // size + policies
+│  └─ ringbuf.h          // public API
+├─ src/
+│  ├─ ringbuf.c          // ring buffer implementation (MCU-agnostic)
+│  ├─ uart_hal.h         // tiny UART HAL (replace with your MCU headers)
+│  ├─ uart_hal.c         // init, tx byte, ISR glue
+│  └─ main.c             // echo example using the API
+└─ README.md
