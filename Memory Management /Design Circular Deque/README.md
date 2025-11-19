@@ -73,7 +73,7 @@ Both move forward/backward depending on operation.
 ├── deque.c        # Implementation
 └── main.c         # Example usage / test program
 
-📌deque.h 
+deque.h 
 CircularDeque* deque_create(int capacity);
 void           deque_destroy(CircularDeque* dq);
 
@@ -178,6 +178,6 @@ size = 0, capacity = 3, empty = true, full = false
 front = (none)
 back  = (none)
 
-⚙ Build Instructions
+Build Instructions
 gcc -std=c11 -Wall -Wextra -o deque_demo main.c deque.c
 ./deque_demo
